@@ -1,0 +1,18 @@
+{
+  "name": "EasyQueryHooks",
+  "version": "1.0.0",
+  "description": "Utility hooks for React Query",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "react-query": "^3.x"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "typescript": "^4.x"
+  }
+}
