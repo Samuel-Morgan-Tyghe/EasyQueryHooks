@@ -6,7 +6,7 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions,
-} from "react-query";
+} from "@tanstack/react-query";
 // Importing API call methods
 import { get, patch, post, put, remove } from "../API";
 import {

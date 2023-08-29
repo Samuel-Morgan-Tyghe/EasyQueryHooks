@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useGetInfiniteAPI = exports.useDeleteAPI = exports.usePutAPI = exports.usePatchAPI = exports.usePostAPI = exports.useGetAPI = void 0;
 // Importing necessary functions and types from React Query
-var react_query_1 = require("react-query");
+var react_query_1 = require("@tanstack/react-query");
 // Importing API call methods
 var API_1 = require("../API");
 var setup_1 = require("./setup");

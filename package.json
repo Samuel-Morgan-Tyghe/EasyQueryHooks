@@ -9,7 +9,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "react-query": "^3.x"
+    "@tanstack/react-query": "^4.33.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",

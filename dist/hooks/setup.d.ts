@@ -1,4 +1,4 @@
-import { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from "react-query";
+import { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 type GlobalOptions = {
     queryOptions?: UseQueryOptions<any>;
     mutationOptions?: UseMutationOptions<any, any, any>;
