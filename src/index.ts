@@ -12,3 +12,6 @@ export {
   globalOptions,
   httpClient,
 } from "./hooks/setup";
+
+// Exporting WrapThatApp component
+export { WrapThatApp, useGlobalContext } from "./WrapThatApp";

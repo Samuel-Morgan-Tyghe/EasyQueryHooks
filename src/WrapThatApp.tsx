@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { GlobalOptions, HttpClientFunctions } from "./setup";
+import { GlobalOptions, HttpClientFunctions } from "./hooks/setup";
 
 interface GlobalContextProps {
   queryClient: QueryClient;
