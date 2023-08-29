@@ -1,15 +1,18 @@
+import React, { createContext, useState, useContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React, { createContext, useState } from "react";
-import { GlobalOptions, HttpClientFunctions } from "./setup"; // Add this import
+import { GlobalOptions, HttpClientFunctions } from "./setup";
 
-interface WrapThatAppProps {
-  children: React.ReactNode;
-  queryClient: QueryClient;
-}
 interface GlobalContextProps {
   queryClient: QueryClient;
   globalOptions: GlobalOptions | null;
   httpClient: HttpClientFunctions | null;
+}
+
+const GlobalContext = createContext<GlobalContextProps | null>(null);
+
+interface WrapThatAppProps {
+  children: React.ReactNode;
+  queryClient: QueryClient;
 }
 
 export const WrapThatApp: React.FC<WrapThatAppProps> = ({
@@ -22,7 +25,6 @@ export const WrapThatApp: React.FC<WrapThatAppProps> = ({
   const [httpClient, setHttpClient] = useState<HttpClientFunctions | null>(
     null
   );
-  const GlobalContext = createContext<GlobalContextProps | null>(null);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -33,4 +35,15 @@ export const WrapThatApp: React.FC<WrapThatAppProps> = ({
       </GlobalContext.Provider>
     </QueryClientProvider>
   );
+};
+
+// Custom hook to use this context
+export const useGlobalContext = (): GlobalContextProps => {
+  const context = useContext(GlobalContext);
+  if (!context) {
+    throw new Error(
+      "useGlobalContext must be used within a WrapThatApp component"
+    );
+  }
+  return context;
 };

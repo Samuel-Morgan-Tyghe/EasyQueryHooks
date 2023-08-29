@@ -1,7 +1,5 @@
-import { QueryClient, UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-export declare let globalQueryClient: QueryClient | null;
-export declare const setupQueryClient: (client: QueryClient) => void;
-type GlobalOptions = {
+import { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
+export type GlobalOptions = {
     queryOptions?: UseQueryOptions<any>;
     mutationOptions?: UseMutationOptions<any, any, any>;
     infiniteQueryOptions?: UseInfiniteQueryOptions<any, any>;
@@ -27,5 +25,4 @@ export declare const setupHTTPClient: (client: HttpClientFunctions, defaultHeade
 export type HttpClientOption = {
     httpClient?: HttpClientFunctions;
 };
-export {};
 //# sourceMappingURL=setup.d.ts.map

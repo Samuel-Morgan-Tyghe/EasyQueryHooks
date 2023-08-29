@@ -11,12 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupHTTPClient = exports.httpClient = exports.setupGlobalOptions = exports.globalOptions = exports.setupQueryClient = exports.globalQueryClient = void 0;
-exports.globalQueryClient = null;
-var setupQueryClient = function (client) {
-    exports.globalQueryClient = client;
-};
-exports.setupQueryClient = setupQueryClient;
+exports.setupHTTPClient = exports.httpClient = exports.setupGlobalOptions = exports.globalOptions = void 0;
 exports.globalOptions = null;
 var setupGlobalOptions = function (options) {
     exports.globalOptions = options;
