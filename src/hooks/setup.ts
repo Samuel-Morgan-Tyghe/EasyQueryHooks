@@ -49,10 +49,13 @@ export type HttpClientFunctions = {
 export let httpClient: HttpClientFunctions | null = null;
 
 // Function to set up the global HTTP client
-export const setupHTTPClient = (
-  client: HttpClientFunctions,
-  defaultHeaders?: Record<string, string>
-) => {
+export const setupHTTPClient = ({
+  client,
+  defaultHeaders,
+}: {
+  client: HttpClientFunctions;
+  defaultHeaders?: Record<string, string>;
+}) => {
   httpClient = { ...client, defaultHeaders };
 };
 

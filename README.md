@@ -27,6 +27,30 @@ yarn add easy-query-hooks
 
 ### Setup
 
+Like with @tanstack You need to Wrap a provider around the app and pass QueryClient in
+
+```javascript
+import { QueryClient } from "@tanstack/react-query";
+import { WrapThatApp } from "easy-query-hooks";
+import TestComponent from "./TestComponent";
+
+const queryClient = new QueryClient();
+
+function App() {
+  return (
+    <WrapThatApp queryClient={queryClient}>
+      <div className="App">
+        <h1>Testing easy-query-hooks</h1>
+        <TestComponent />
+      </div>
+    </WrapThatApp>
+  );
+}
+
+export default App;
+```
+
+
 Before using hooks, you may want to set up global options and an HTTP client.
 
 ```javascript
