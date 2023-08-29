@@ -1,16 +1,10 @@
 import {
-  QueryClient,
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from "@tanstack/react-query";
 
-export let globalQueryClient: QueryClient | null = null;
-export const setupQueryClient = (client: QueryClient) => {
-  globalQueryClient = client;
-};
-
-type GlobalOptions = {
+export type GlobalOptions = {
   queryOptions?: UseQueryOptions<any>;
   mutationOptions?: UseMutationOptions<any, any, any>;
   infiniteQueryOptions?: UseInfiniteQueryOptions<any, any>;
