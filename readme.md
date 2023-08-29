@@ -1,4 +1,3 @@
-
 # easy-query-hooks
 
 Utility hooks for React Query, providing an easy and consistent way to make API calls. Simplifies your React application by abstracting common HTTP methods.
@@ -120,12 +119,9 @@ const handleSubmit = async () => {
 };
 ```
 
-
-
 ### Using `useGetInfiniteAPI` to fetch articles
 
 ```javascript
-
 const { data, fetchNextPage, hasNextPage } = useGetInfiniteAPI({
   endpoint: '/api/articles?sort=desc',
   hasParams: true,
@@ -141,9 +137,7 @@ const fetchMoreArticles = () => {
     fetchNextPage();
   }
 };
-
 ```
-
 
 ### Using `setupGlobalOptions` to define Global Options
 
@@ -184,9 +178,10 @@ setupGlobalOptions(globalOptions);
 
 ## Contribution
 
-Feel free to open issues or PRs! Check the Contribution Guide for more details.
+Feel free to open issues or PRs! Check the [Contribution Guide](https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks/blob/main/CONTRIBUTING.md) for more details.
 
 ## License
 
 MIT
 
+GitHub Repository: [Samuel-Morgan-Tyghe/EasyQueryHooks](https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks)
