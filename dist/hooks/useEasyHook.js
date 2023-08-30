@@ -52,26 +52,28 @@ exports.useGetInfiniteAPI = exports.useDeleteAPI = exports.usePutAPI = exports.u
 var react_query_1 = require("@tanstack/react-query");
 // Importing API call methods
 var API_1 = require("../API");
-var setup_1 = require("./setup");
+var WrapThatApp_1 = require("../WrapThatApp");
 // Hook to handle GET API calls
 function useGetAPI(_a) {
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
     // Determine which HTTP client to use
-    var client = localHttpClient || setup_1.httpClient;
+    var client = localHttpClient || globalHttpClient;
     // Combine default and custom headers
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useQuery)([endpoint], function () {
         return (client === null || client === void 0 ? void 0 : client.get)
             ? client.get(endpoint, combinedHeaders)
             : (0, API_1.get)(endpoint, combinedHeaders);
-    }, __assign(__assign({}, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.queryOptions), options));
+    }, __assign(__assign({}, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.queryOptions), options));
 }
 exports.useGetAPI = useGetAPI;
 // Hook to handle POST API calls
 function usePostAPI(_a) {
     var _this = this;
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var client = localHttpClient || setup_1.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    var client = localHttpClient || globalHttpClient;
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -80,14 +82,15 @@ function usePostAPI(_a) {
                         ? client.post(endpoint, data, combinedHeaders)
                         : (0, API_1.post)(endpoint, data, combinedHeaders)];
             });
-        }); } }, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.mutationOptions), options));
+        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
 }
 exports.usePostAPI = usePostAPI;
 // Hook to handle PATCH API calls
 function usePatchAPI(_a) {
     var _this = this;
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var client = localHttpClient || setup_1.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    var client = localHttpClient || globalHttpClient;
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -95,14 +98,15 @@ function usePatchAPI(_a) {
                         ? client.patch(endpoint, data, combinedHeaders)
                         : (0, API_1.patch)(endpoint, data, combinedHeaders)];
             });
-        }); } }, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.mutationOptions), options));
+        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
 }
 exports.usePatchAPI = usePatchAPI;
 // Hook to handle PUT API calls
 function usePutAPI(_a) {
     var _this = this;
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var client = localHttpClient || setup_1.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    var client = localHttpClient || globalHttpClient;
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -110,14 +114,15 @@ function usePutAPI(_a) {
                         ? client.put(endpoint, data, combinedHeaders)
                         : (0, API_1.put)(endpoint, data, combinedHeaders)];
             });
-        }); } }, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.mutationOptions), options));
+        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
 }
 exports.usePutAPI = usePutAPI;
 // Hook to handle DELETE API calls
 function useDeleteAPI(_a) {
     var _this = this;
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var client = localHttpClient || setup_1.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    var client = localHttpClient || globalHttpClient;
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -125,14 +130,15 @@ function useDeleteAPI(_a) {
                         ? client.delete(endpoint, combinedHeaders)
                         : (0, API_1.remove)(endpoint, combinedHeaders)];
             });
-        }); } }, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.mutationOptions), options));
+        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
 }
 exports.useDeleteAPI = useDeleteAPI;
 // Hook to handle GET API calls with pagination (infinite scroll)
 function useGetInfiniteAPI(_a) {
     var _this = this;
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, hasParams = _a.hasParams, localHttpClient = _a.httpClient;
-    var client = localHttpClient || setup_1.httpClient;
+    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    var client = localHttpClient || globalHttpClient;
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useInfiniteQuery)([endpoint], function (_a) {
         var _b = _a.pageParam, pageParam = _b === void 0 ? 1 : _b;
@@ -145,7 +151,7 @@ function useGetInfiniteAPI(_a) {
                         : (0, API_1.get)(formatEndpoint, combinedHeaders)];
             });
         });
-    }, __assign(__assign({}, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.infiniteQueryOptions), options));
+    }, __assign(__assign({}, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.infiniteQueryOptions), options));
 }
 exports.useGetInfiniteAPI = useGetInfiniteAPI;
 //# sourceMappingURL=useEasyHook.js.map

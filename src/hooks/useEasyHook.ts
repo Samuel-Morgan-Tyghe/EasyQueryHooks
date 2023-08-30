@@ -9,12 +9,8 @@ import {
 } from "@tanstack/react-query";
 // Importing API call methods
 import { get, patch, post, put, remove } from "../API";
-import {
-  globalOptions,
-  httpClient,
-  HttpClientOption,
-  UseHooksProps,
-} from "./setup";
+import { useGlobalContext } from "../WrapThatApp";
+import { HttpClientOption, UseHooksProps } from "./setup";
 
 // Hook to handle GET API calls
 export function useGetAPI<T>({
@@ -23,8 +19,10 @@ export function useGetAPI<T>({
   headers,
   httpClient: localHttpClient,
 }: UseHooksProps & { options?: UseQueryOptions<T> } & HttpClientOption) {
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
   // Determine which HTTP client to use
-  const client = localHttpClient || httpClient;
+  const client = localHttpClient || globalHttpClient;
   // Combine default and custom headers
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
@@ -37,6 +35,7 @@ export function useGetAPI<T>({
     { ...globalOptions?.queryOptions, ...options }
   );
 }
+
 // Hook to handle POST API calls
 export function usePostAPI<TRequest, TResponse>({
   endpoint,
@@ -46,7 +45,9 @@ export function usePostAPI<TRequest, TResponse>({
 }: UseHooksProps & {
   options?: UseMutationOptions<TResponse, unknown, TRequest>;
 } & HttpClientOption) {
-  const client = localHttpClient || httpClient;
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
+  const client = localHttpClient || globalHttpClient;
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
   return useMutation<TResponse, unknown, TRequest>({
@@ -70,7 +71,9 @@ export function usePatchAPI<TRequest, TResponse>({
 }: UseHooksProps & {
   options?: UseMutationOptions<TResponse, unknown, TRequest>;
 } & HttpClientOption) {
-  const client = localHttpClient || httpClient;
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
+  const client = localHttpClient || globalHttpClient;
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
   return useMutation<TResponse, unknown, TRequest>({
@@ -93,7 +96,9 @@ export function usePutAPI<TRequest, TResponse>({
 }: UseHooksProps & {
   options?: UseMutationOptions<TResponse, unknown, TRequest>;
 } & HttpClientOption) {
-  const client = localHttpClient || httpClient;
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
+  const client = localHttpClient || globalHttpClient;
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
   return useMutation<TResponse, unknown, TRequest>({
@@ -116,7 +121,9 @@ export function useDeleteAPI<TRequest, TResponse>({
 }: UseHooksProps & {
   options?: UseMutationOptions<TResponse, unknown, TRequest>;
 } & HttpClientOption) {
-  const client = localHttpClient || httpClient;
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
+  const client = localHttpClient || globalHttpClient;
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
   return useMutation<TResponse, unknown, TRequest>({
@@ -140,7 +147,9 @@ export function useGetInfiniteAPI<T>({
 }: UseHooksProps & { options?: UseInfiniteQueryOptions<T> } & {
   hasParams?: boolean;
 } & HttpClientOption) {
-  const client = localHttpClient || httpClient;
+  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+
+  const client = localHttpClient || globalHttpClient;
   const combinedHeaders = { ...client?.defaultHeaders, ...headers };
 
   return useInfiniteQuery<T>(

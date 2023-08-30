@@ -1,11 +1,10 @@
 import React, { createContext, useState, useContext } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProviderProps } from "@tanstack/react-query";
 import { GlobalOptions, HttpClientFunctions } from "./hooks/setup";
 
 interface GlobalContextProps {
-  queryClient: QueryClient;
-  globalOptions: GlobalOptions | null;
-  httpClient: HttpClientFunctions | null;
+  globalOptions?: GlobalOptions | null;
+  httpClient?: HttpClientFunctions | null;
 }
 
 const GlobalContext = createContext<GlobalContextProps | null>(null);
@@ -13,24 +12,21 @@ const GlobalContext = createContext<GlobalContextProps | null>(null);
 interface WrapThatAppProps {
   children: React.ReactNode;
   queryClient: QueryClient;
+  QueryClientProvider: React.ComponentType<QueryClientProviderProps>;
+  globalOptions?: GlobalOptions | null;
+  httpClient?: HttpClientFunctions | null;
 }
 
 export const WrapThatApp: React.FC<WrapThatAppProps> = ({
   children,
   queryClient,
+  QueryClientProvider,
+  globalOptions,
+  httpClient,
 }) => {
-  const [globalOptions, setGlobalOptions] = useState<GlobalOptions | null>(
-    null
-  );
-  const [httpClient, setHttpClient] = useState<HttpClientFunctions | null>(
-    null
-  );
-
   return (
     <QueryClientProvider client={queryClient}>
-      <GlobalContext.Provider
-        value={{ queryClient, globalOptions, httpClient }}
-      >
+      <GlobalContext.Provider value={{ globalOptions, httpClient }}>
         {children}
       </GlobalContext.Provider>
     </QueryClientProvider>

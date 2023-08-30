@@ -25,14 +25,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useGlobalContext = exports.WrapThatApp = void 0;
 var react_1 = __importStar(require("react"));
-var react_query_1 = require("@tanstack/react-query");
 var GlobalContext = (0, react_1.createContext)(null);
 var WrapThatApp = function (_a) {
-    var children = _a.children, queryClient = _a.queryClient;
-    var _b = (0, react_1.useState)(null), globalOptions = _b[0], setGlobalOptions = _b[1];
-    var _c = (0, react_1.useState)(null), httpClient = _c[0], setHttpClient = _c[1];
-    return (react_1.default.createElement(react_query_1.QueryClientProvider, { client: queryClient },
-        react_1.default.createElement(GlobalContext.Provider, { value: { queryClient: queryClient, globalOptions: globalOptions, httpClient: httpClient } }, children)));
+    var children = _a.children, queryClient = _a.queryClient, QueryClientProvider = _a.QueryClientProvider, globalOptions = _a.globalOptions, httpClient = _a.httpClient;
+    return (react_1.default.createElement(QueryClientProvider, { client: queryClient },
+        react_1.default.createElement(GlobalContext.Provider, { value: { globalOptions: globalOptions, httpClient: httpClient } }, children)));
 };
 exports.WrapThatApp = WrapThatApp;
 // Custom hook to use this context
