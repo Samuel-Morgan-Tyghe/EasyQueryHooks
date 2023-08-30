@@ -30,7 +30,10 @@ export function useGetAPI<T>({
 
   return useQuery<T>(
     [endpoint],
-    () => (client ? client.get(endpoint, combinedHeaders) : get(endpoint)),
+    () =>
+      client
+        ? client.get(endpoint, combinedHeaders)
+        : get(endpoint, combinedHeaders),
     { ...globalOptions?.queryOptions, ...options }
   );
 }
