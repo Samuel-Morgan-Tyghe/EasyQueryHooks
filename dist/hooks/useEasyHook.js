@@ -52,107 +52,117 @@ exports.useGetInfiniteAPI = exports.useDeleteAPI = exports.usePutAPI = exports.u
 var react_query_1 = require("@tanstack/react-query");
 // Importing API call methods
 var API_1 = require("../API");
-var WrapThatApp_1 = require("../WrapThatApp");
+var setup_1 = require("./setup");
 // Hook to handle GET API calls
 function useGetAPI(_a) {
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    console.log("Global context value:", { globalOptions: globalOptions, globalHttpClient: globalHttpClient });
+    var _this = this;
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalGet = _b.get, defaultUseQuery = _b.useQuery, queryOptions = _b.queryOptions;
     // Determine which HTTP client to use
-    var client = localHttpClient || globalHttpClient;
+    var client = localHttpClient || globalGet || API_1.get;
     // Combine default and custom headers
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useQuery)([endpoint], function () {
-        return (client === null || client === void 0 ? void 0 : client.get)
-            ? client.get(endpoint, combinedHeaders)
-            : (0, API_1.get)(endpoint, combinedHeaders);
-    }, __assign(__assign({}, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.queryOptions), options));
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useQuery = defaultUseQuery || react_query_1.useQuery;
+    return useQuery([url], function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/, client({ url: url, header: header })];
+    }); }); }, __assign(__assign({}, queryOptions), options));
 }
 exports.useGetAPI = useGetAPI;
 // Hook to handle POST API calls
 function usePostAPI(_a) {
     var _this = this;
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    var client = localHttpClient || globalHttpClient;
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalPost = _b.post, defaultUseMutation = _b.useMutation, mutationOptions = _b.mutationOptions;
+    // Determine which HTTP client to use
+    var client = localHttpClient || globalPost || API_1.post;
+    // Combine default and custom headers
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useMutation = defaultUseMutation || react_query_1.useMutation;
+    return useMutation(__assign(__assign({ mutationFn: function (requestData) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 // Perform the API call, either using the local or global HTTP client
-                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.post)
-                        ? client.post(endpoint, data, combinedHeaders)
-                        : (0, API_1.post)(endpoint, data, combinedHeaders)];
+                return [2 /*return*/, client({ url: url, data: requestData, header: header })];
             });
-        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
+        }); } }, mutationOptions), options));
 }
 exports.usePostAPI = usePostAPI;
 // Hook to handle PATCH API calls
 function usePatchAPI(_a) {
     var _this = this;
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    var client = localHttpClient || globalHttpClient;
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalPatch = _b.patch, defaultUseMutation = _b.useMutation, mutationOptions = _b.mutationOptions;
+    // Determine which HTTP client to use
+    var client = localHttpClient || globalPatch || API_1.patch;
+    // Combine default and custom headers
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useMutation = defaultUseMutation || react_query_1.useMutation;
+    return useMutation(__assign(__assign({ mutationFn: function (requestData) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.patch)
-                        ? client.patch(endpoint, data, combinedHeaders)
-                        : (0, API_1.patch)(endpoint, data, combinedHeaders)];
+                // Perform the API call, either using the local or global HTTP client
+                return [2 /*return*/, client({ url: url, data: requestData, header: header })];
             });
-        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
+        }); } }, mutationOptions), options));
 }
 exports.usePatchAPI = usePatchAPI;
 // Hook to handle PUT API calls
 function usePutAPI(_a) {
     var _this = this;
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    var client = localHttpClient || globalHttpClient;
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalPut = _b.put, defaultUseMutation = _b.useMutation, mutationOptions = _b.mutationOptions;
+    // Determine which HTTP client to use
+    var client = localHttpClient || globalPut || API_1.put;
+    // Combine default and custom headers
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useMutation = defaultUseMutation || react_query_1.useMutation;
+    return useMutation(__assign(__assign({ mutationFn: function (requestData) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.put)
-                        ? client.put(endpoint, data, combinedHeaders)
-                        : (0, API_1.put)(endpoint, data, combinedHeaders)];
+                // Perform the API call, either using the local or global HTTP client
+                return [2 /*return*/, client({ url: url, data: requestData, header: header })];
             });
-        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
+        }); } }, mutationOptions), options));
 }
 exports.usePutAPI = usePutAPI;
 // Hook to handle DELETE API calls
 function useDeleteAPI(_a) {
     var _this = this;
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    var client = localHttpClient || globalHttpClient;
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function () { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.delete)
-                        ? client.delete(endpoint, combinedHeaders)
-                        : (0, API_1.remove)(endpoint, combinedHeaders)];
-            });
-        }); } }, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.mutationOptions), options));
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalDelete = _b.delete, defaultUseQuery = _b.useQuery, queryOptions = _b.queryOptions;
+    // Determine which HTTP client to use
+    var client = localHttpClient || globalDelete || API_1.remove;
+    // Combine default and custom headers
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useQuery = defaultUseQuery || react_query_1.useQuery;
+    return useQuery([url], function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/, client({ url: url, header: header })];
+    }); }); }, __assign(__assign({}, queryOptions), options));
 }
 exports.useDeleteAPI = useDeleteAPI;
 // Hook to handle GET API calls with pagination (infinite scroll)
 function useGetInfiniteAPI(_a) {
     var _this = this;
-    var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, hasParams = _a.hasParams, localHttpClient = _a.httpClient;
-    var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
-    var client = localHttpClient || globalHttpClient;
-    var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useInfiniteQuery)([endpoint], function (_a) {
+    var url = _a.url, options = _a.options, localHeaders = _a.headers, hasParams = _a.hasParams, localHttpClient = _a.httpClient;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalGet = _b.get, defaultUseInfiiniteQuery = _b.useInfiniteQuery, infiniteQueryOptions = _b.infiniteQueryOptions;
+    // Determine which HTTP client to use
+    var client = localHttpClient || globalGet || API_1.get;
+    // Combine default and custom headers
+    var header = __assign(__assign({}, defaultHeaders), localHeaders);
+    // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+    var useInfiniteQuery = defaultUseInfiiniteQuery || react_query_1.useInfiniteQuery;
+    return useInfiniteQuery([url], function (_a) {
         var _b = _a.pageParam, pageParam = _b === void 0 ? 1 : _b;
         return __awaiter(_this, void 0, void 0, function () {
-            var formatEndpoint;
+            var formaturl;
             return __generator(this, function (_c) {
-                formatEndpoint = "".concat(endpoint).concat(hasParams ? "&" : "?", "page=").concat(pageParam);
-                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.get)
-                        ? client.get(formatEndpoint, combinedHeaders)
-                        : (0, API_1.get)(formatEndpoint, combinedHeaders)];
+                formaturl = "".concat(url).concat(hasParams ? "&" : "?", "page=").concat(pageParam);
+                return [2 /*return*/, client({ url: formaturl, header: header })];
             });
         });
-    }, __assign(__assign({}, globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.infiniteQueryOptions), options));
+    }, __assign(__assign({}, infiniteQueryOptions), options));
 }
 exports.useGetInfiniteAPI = useGetInfiniteAPI;
 //# sourceMappingURL=useEasyHook.js.map

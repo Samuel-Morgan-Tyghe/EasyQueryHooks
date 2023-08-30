@@ -1,14 +1,19 @@
 type ApiOptions = {
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-    endpoint: string;
+    url: string;
     body?: unknown;
     headers?: Record<string, string>;
 };
-export default function api({ method, endpoint, body, headers, }: ApiOptions): Promise<any>;
-export declare const get: (endpoint: string, headers?: Record<string, string>) => Promise<any>;
-export declare const post: (endpoint: string, body: unknown, headers?: Record<string, string>) => Promise<any>;
-export declare const put: (endpoint: string, body: unknown, headers?: Record<string, string>) => Promise<any>;
-export declare const patch: (endpoint: string, body: unknown, headers?: Record<string, string>) => Promise<any>;
-export declare const remove: (endpoint: string, body: unknown, headers?: Record<string, string>) => Promise<any>;
+export type HttpClientParams<T = any> = {
+    url: string;
+    data?: T;
+    header: Record<string, string>;
+};
+export default function api({ method, url, body, headers }: ApiOptions): Promise<any>;
+export declare const get: ({ url, header }: HttpClientParams) => Promise<any>;
+export declare const post: ({ url, data, header }: HttpClientParams) => Promise<any>;
+export declare const put: ({ url, data, header }: HttpClientParams) => Promise<any>;
+export declare const patch: ({ url, data, header }: HttpClientParams) => Promise<any>;
+export declare const remove: ({ url, data, header }: HttpClientParams) => Promise<any>;
 export {};
 //# sourceMappingURL=API.d.ts.map

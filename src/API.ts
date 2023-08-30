@@ -1,17 +1,18 @@
 type ApiOptions = {
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  endpoint: string;
+  url: string;
   body?: unknown;
   headers?: Record<string, string>;
 };
 
-export default async function api({
-  method,
-  endpoint,
-  body,
-  headers,
-}: ApiOptions) {
-  const response = await fetch(endpoint, {
+export type HttpClientParams<T = any> = {
+  url: string;
+  data?: T;
+  header: Record<string, string>;
+};
+
+export default async function api({ method, url, body, headers }: ApiOptions) {
+  const response = await fetch(url, {
     method,
     body: JSON.stringify(body),
     headers: {
@@ -19,6 +20,7 @@ export default async function api({
       ...headers,
     },
   });
+
   if (!response.ok) {
     throw Error(await response.text());
   }
@@ -26,41 +28,22 @@ export default async function api({
   return data;
 }
 
-export const get = async (
-  endpoint: string,
-  headers?: Record<string, string>
-) => {
-  return api({ method: "GET", endpoint, headers });
+export const get = async ({ url, header }: HttpClientParams) => {
+  return api({ method: "GET", url, headers: header });
 };
 
-export const post = async (
-  endpoint: string,
-  body: unknown,
-  headers?: Record<string, string>
-) => {
-  return api({ method: "POST", endpoint, body, headers });
+export const post = async ({ url, data, header }: HttpClientParams) => {
+  return api({ method: "POST", url, body: data, headers: header });
 };
 
-export const put = async (
-  endpoint: string,
-  body: unknown,
-  headers?: Record<string, string>
-) => {
-  return api({ method: "PUT", endpoint, body, headers });
+export const put = async ({ url, data, header }: HttpClientParams) => {
+  return api({ method: "PUT", url, body: data, headers: header });
 };
 
-export const patch = async (
-  endpoint: string,
-  body: unknown,
-  headers?: Record<string, string>
-) => {
-  return api({ method: "PATCH", endpoint, body, headers });
+export const patch = async ({ url, data, header }: HttpClientParams) => {
+  return api({ method: "PATCH", url, body: data, headers: header });
 };
 
-export const remove = async (
-  endpoint: string,
-  body: unknown,
-  headers?: Record<string, string>
-) => {
-  return api({ method: "DELETE", endpoint, body, headers });
+export const remove = async ({ url, data, header }: HttpClientParams) => {
+  return api({ method: "DELETE", url, body: data, headers: header });
 };

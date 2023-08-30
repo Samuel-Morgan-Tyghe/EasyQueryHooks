@@ -1,79 +1,71 @@
 // index.d.ts
 
-declare module "easy-query-hooks" {
-  import {
-    UseInfiniteQueryOptions,
-    UseMutationOptions,
-    UseQueryOptions,
-  } from "react-query";
+import {
+  MutationOptions,
+  QueryClient,
+  QueryClientProviderProps,
+  UseInfiniteQueryOptions,
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation as useTanstackMutation,
+  useQuery as useTanstackQuery,
+} from "@tanstack/react-query";
 
-  type HttpClientFunctions = {
-    get: (url: string, header: Record<string, string>) => Promise<any>;
-    post: (
-      url: string,
-      data: any,
-      header: Record<string, string>
-    ) => Promise<any>;
-    patch: (
-      url: string,
-      data: any,
-      header: Record<string, string>
-    ) => Promise<any>;
-    put: (
-      url: string,
-      data: any,
-      header: Record<string, string>
-    ) => Promise<any>;
-    delete: (url: string, header: Record<string, string>) => Promise<any>;
-    defaultHeaders?: Record<string, string>;
+declare module "easy-query-hooks" {
+  export type WrapThatAppProps = {
+    children: React.ReactNode;
+    queryClient: QueryClient;
+    QueryClientProvider: React.ComponentType<QueryClientProviderProps>;
   };
 
-  interface UseHooksProps {
-    endpoint: string;
+  type HttpClientParams<T = any> = {
+    url: string;
+    data?: T;
+    header: Record<string, string>;
+  };
+  // Type definition for API calls without data
+  export type StandardApi = (params: HttpClientParams) => Promise<any>;
+
+  // Type definition for API calls with data
+  export type WithDataApi = (params: HttpClientParams) => Promise<any>;
+
+  export type EasyQueryHooksPropTypes = {
+    useQuery: typeof useTanstackQuery;
+    useMutation: typeof useTanstackMutation;
+    queryOptions?: UseQueryOptions<any>;
+    mutationOptions?: UseMutationOptions<any, any, any>;
+    infiniteQueryOptions?: UseInfiniteQueryOptions<any, any>;
+    defaultHeaders?: Record<string, string>;
+    get?: WithDataApi;
+    post?: WithDataApi;
+    patch?: WithDataApi;
+    put?: WithDataApi;
+    delete?: WithDataApi;
+  };
+
+  type UseHooksProps<T> = {
+    url: string;
+    options?: UseQueryOptions<T>;
     headers?: Record<string, string>;
-  }
-
-  interface HttpClientOption {
-    httpClient?: HttpClientFunctions;
-  }
-
-  export function useGetAPI<T>(
-    props: UseHooksProps & { options?: UseQueryOptions<T> } & HttpClientOption
-  ): any;
-
-  export function usePostAPI<TRequest, TResponse>(
-    props: UseHooksProps & {
-      options?: UseMutationOptions<TResponse, unknown, TRequest>;
-    } & HttpClientOption
-  ): any;
-
-  export function usePatchAPI<TRequest, TResponse>(
-    props: UseHooksProps & {
-      options?: UseMutationOptions<TResponse, unknown, TRequest>;
-    } & HttpClientOption
-  ): any;
-
-  export function usePutAPI<TRequest, TResponse>(
-    props: UseHooksProps & {
-      options?: UseMutationOptions<TResponse, unknown, TRequest>;
-    } & HttpClientOption
-  ): any;
-
-  export function useDeleteAPI<TRequest, TResponse>(
-    props: UseHooksProps & {
-      options?: UseMutationOptions<TResponse, unknown, TRequest>;
-    } & HttpClientOption
-  ): any;
-
-  export function useGetInfiniteAPI<T>(
-    props: UseHooksProps & { options?: UseInfiniteQueryOptions<T> } & {
-      hasParams?: boolean;
-    } & HttpClientOption
-  ): any;
-
-  export function setupGlobalOptions(options: any): void;
-  export function setupHTTPClient(
-    client: HttpClientFunctions,
-    defaultHeaders?: Record<string, string>
-  ): void;
+    httpClient?: WithDataApi;
+  };
+  type UseInfinityHooksProps<T> = {
+    url: string;
+    options?: UseInfiniteQueryOptions<T>;
+    headers?: Record<string, string>;
+    httpClient?: WithDataApi;
+    hasParams?: boolean;
+  };
+  type UseMutateHooksProps<TRequest, TResponse> = {
+    url: string;
+    options?: MutationOptions<TResponse, unknown, TRequest, unknown>;
+    headers?: Record<string, string>;
+    httpClient?: WithDataApi;
+  };
+  type ApiOptions = {
+    method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    url: string;
+    body?: unknown;
+    headers?: Record<string, string>;
+  };
 }

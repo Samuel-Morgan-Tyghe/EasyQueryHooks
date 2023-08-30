@@ -1,31 +1,24 @@
-import { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-export type GlobalOptions = {
+import { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions, useInfiniteQuery as useTanstackInfinityQuery, useMutation as useTanstackMutation, useQuery as useTanstackQuery } from "@tanstack/react-query";
+import { HttpClientParams } from "../API";
+export type StandardApi = (params: HttpClientParams) => Promise<any>;
+export type WithDataApi = (params: HttpClientParams) => Promise<any>;
+export type EasyQueryHooksPropTypes = {
+    useMutation: typeof useTanstackMutation;
+    useQuery: typeof useTanstackQuery;
+    useInfiniteQuery: typeof useTanstackInfinityQuery;
+    defaultHeaders?: Record<string, string>;
     queryOptions?: UseQueryOptions<any>;
     mutationOptions?: UseMutationOptions<any, any, any>;
     infiniteQueryOptions?: UseInfiniteQueryOptions<any, any>;
-};
-export declare let globalOptions: GlobalOptions | null;
-export declare const setupGlobalOptions: (options: GlobalOptions) => void;
-export type UseHooksProps = {
-    endpoint: string;
-    headers?: Record<string, string>;
-};
-export type StandardApi = (url: string, header: Record<string, string>) => Promise<any>;
-export type WithDataApi = (url: string, data: any, header: Record<string, string>) => Promise<any>;
-export type HttpClientFunctions = {
-    defaultHeaders?: Record<string, string>;
-    get?: StandardApi;
+    get?: WithDataApi;
     post?: WithDataApi;
     patch?: WithDataApi;
     put?: WithDataApi;
-    delete?: StandardApi;
+    delete?: WithDataApi;
 };
-export declare let httpClient: HttpClientFunctions | null;
-export declare const setupHTTPClient: ({ client, defaultHeaders, }: {
-    client?: HttpClientFunctions | undefined;
-    defaultHeaders?: Record<string, string> | undefined;
-}) => void;
-export type HttpClientOption = {
-    httpClient?: HttpClientFunctions;
-};
+export declare let easyQueryHooksProps: EasyQueryHooksPropTypes | null;
+export declare const setUpEasyQueryHooks: (easyQueryHooksArgs: EasyQueryHooksPropTypes) => void;
+export type Prettify<T> = {
+    [K in keyof T]: T[K];
+} & {};
 //# sourceMappingURL=setup.d.ts.map

@@ -49,12 +49,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.remove = exports.patch = exports.put = exports.post = exports.get = void 0;
 function api(_a) {
-    var method = _a.method, endpoint = _a.endpoint, body = _a.body, headers = _a.headers;
+    var method = _a.method, url = _a.url, body = _a.body, headers = _a.headers;
     return __awaiter(this, void 0, void 0, function () {
         var response, _b, data;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, fetch(endpoint, {
+                case 0: return [4 /*yield*/, fetch(url, {
                         method: method,
                         body: JSON.stringify(body),
                         headers: __assign({ "Content-Type": "application/json" }, headers),
@@ -74,34 +74,49 @@ function api(_a) {
     });
 }
 exports.default = api;
-var get = function (endpoint, headers) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, api({ method: "GET", endpoint: endpoint, headers: headers })];
+var get = function (_a) {
+    var url = _a.url, header = _a.header;
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_b) {
+            return [2 /*return*/, api({ method: "GET", url: url, headers: header })];
+        });
     });
-}); };
+};
 exports.get = get;
-var post = function (endpoint, body, headers) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, api({ method: "POST", endpoint: endpoint, body: body, headers: headers })];
+var post = function (_a) {
+    var url = _a.url, data = _a.data, header = _a.header;
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_b) {
+            return [2 /*return*/, api({ method: "POST", url: url, body: data, headers: header })];
+        });
     });
-}); };
+};
 exports.post = post;
-var put = function (endpoint, body, headers) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, api({ method: "PUT", endpoint: endpoint, body: body, headers: headers })];
+var put = function (_a) {
+    var url = _a.url, data = _a.data, header = _a.header;
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_b) {
+            return [2 /*return*/, api({ method: "PUT", url: url, body: data, headers: header })];
+        });
     });
-}); };
+};
 exports.put = put;
-var patch = function (endpoint, body, headers) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, api({ method: "PATCH", endpoint: endpoint, body: body, headers: headers })];
+var patch = function (_a) {
+    var url = _a.url, data = _a.data, header = _a.header;
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_b) {
+            return [2 /*return*/, api({ method: "PATCH", url: url, body: data, headers: header })];
+        });
     });
-}); };
+};
 exports.patch = patch;
-var remove = function (endpoint, body, headers) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, api({ method: "DELETE", endpoint: endpoint, body: body, headers: headers })];
+var remove = function (_a) {
+    var url = _a.url, data = _a.data, header = _a.header;
+    return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_b) {
+            return [2 /*return*/, api({ method: "DELETE", url: url, body: data, headers: header })];
+        });
     });
-}); };
+};
 exports.remove = remove;
 //# sourceMappingURL=API.js.map

@@ -6,12 +6,7 @@ export {
   useDeleteAPI,
 } from "./hooks/useEasyHook";
 
-export {
-  setupGlobalOptions,
-  setupHTTPClient,
-  globalOptions,
-  httpClient,
-} from "./hooks/setup";
+export { setUpEasyQueryHooks } from "./hooks/setup";
 
 // Exporting WrapThatApp component
-export { WrapThatApp, useGlobalContext } from "./WrapThatApp";
+export { WrapThatApp } from "./WrapThatApp";

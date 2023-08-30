@@ -1,177 +1,237 @@
 // Importing necessary functions and types from React Query
 import {
-  useInfiniteQuery,
+  MutationOptions,
   UseInfiniteQueryOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
   UseQueryOptions,
+  useMutation as useBackupMutation,
+  useQuery as useBackupQuery,
+  useInfiniteQuery as useBackupInfiniteQuery,
 } from "@tanstack/react-query";
 // Importing API call methods
 import { get, patch, post, put, remove } from "../API";
-import { useGlobalContext } from "../WrapThatApp";
-import { HttpClientOption, UseHooksProps } from "./setup";
+import { WithDataApi, easyQueryHooksProps } from "./setup";
+
+type UseHooksProps<T> = {
+  url: string;
+  options?: UseQueryOptions<T>;
+  headers?: Record<string, string>;
+  httpClient?: WithDataApi;
+};
+type UseInfinityHooksProps<T> = {
+  url: string;
+  options?: UseInfiniteQueryOptions<T>;
+  headers?: Record<string, string>;
+  httpClient?: WithDataApi;
+  hasParams?: boolean;
+};
+type UseMutateHooksProps<TRequest, TResponse> = {
+  url: string;
+  options?: MutationOptions<TResponse, unknown, TRequest, unknown>;
+  headers?: Record<string, string>;
+  httpClient?: WithDataApi;
+};
 
 // Hook to handle GET API calls
 export function useGetAPI<T>({
-  endpoint,
+  url,
   options,
-  headers,
+  headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps & { options?: UseQueryOptions<T> } & HttpClientOption) {
-  const globalContext = useGlobalContext();
-  console.log("🚀 ~ file: useEasyHook.ts:23 ~ globalContext:", globalContext);
-
-  const globalHttpClient = globalContext.httpClient;
-  const globalOptions = globalContext.globalOptions;
-
-  console.log("Global context value:", {
-    globalOptions,
-    globalHttpClient,
-  });
+}: UseHooksProps<T>) {
+  const {
+    defaultHeaders,
+    get: globalGet,
+    useQuery: defaultUseQuery,
+    queryOptions,
+  } = easyQueryHooksProps || {};
 
   // Determine which HTTP client to use
-  const client = localHttpClient || globalHttpClient;
-  // Combine default and custom headers
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  const client = localHttpClient || globalGet || get;
 
-  return useQuery<T>(
-    [endpoint],
-    () =>
-      client?.get
-        ? client.get(endpoint, combinedHeaders)
-        : get(endpoint, combinedHeaders),
-    { ...globalOptions?.queryOptions, ...options }
-  );
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useQuery = defaultUseQuery || useBackupQuery;
+  return useQuery<T>([url], async () => client({ url, header }), {
+    ...queryOptions,
+    ...options,
+  });
 }
 
 // Hook to handle POST API calls
 export function usePostAPI<TRequest, TResponse>({
-  endpoint,
+  url,
   options,
-  headers,
+  headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps & {
-  options?: UseMutationOptions<TResponse, unknown, TRequest>;
-} & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+}: UseMutateHooksProps<TRequest, TResponse>) {
+  const {
+    defaultHeaders,
+    post: globalPost,
+    useMutation: defaultUseMutation,
+    mutationOptions,
+  } = easyQueryHooksProps || {};
 
-  const client = localHttpClient || globalHttpClient;
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  // Determine which HTTP client to use
+  const client = localHttpClient || globalPost || post;
+
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useMutation = defaultUseMutation || useBackupMutation;
 
   return useMutation<TResponse, unknown, TRequest>({
-    mutationFn: async (data) => {
+    mutationFn: async (requestData: TRequest) => {
       // Perform the API call, either using the local or global HTTP client
-      return client?.post
-        ? client.post(endpoint, data, combinedHeaders)
-        : post(endpoint, data, combinedHeaders);
+      return client({ url, data: requestData, header });
     },
-    ...globalOptions?.mutationOptions,
+    ...mutationOptions,
     ...options,
   });
 }
 
 // Hook to handle PATCH API calls
 export function usePatchAPI<TRequest, TResponse>({
-  endpoint,
+  url,
   options,
-  headers,
+  headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps & {
-  options?: UseMutationOptions<TResponse, unknown, TRequest>;
-} & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+}: UseMutateHooksProps<TRequest, TResponse>) {
+  const {
+    defaultHeaders,
+    patch: globalPatch,
+    useMutation: defaultUseMutation,
+    mutationOptions,
+  } = easyQueryHooksProps || {};
 
-  const client = localHttpClient || globalHttpClient;
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  // Determine which HTTP client to use
+  const client = localHttpClient || globalPatch || patch;
+
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useMutation = defaultUseMutation || useBackupMutation;
 
   return useMutation<TResponse, unknown, TRequest>({
-    mutationFn: async (data) => {
-      return client?.patch
-        ? client.patch(endpoint, data, combinedHeaders)
-        : patch(endpoint, data, combinedHeaders);
+    mutationFn: async (requestData: TRequest) => {
+      // Perform the API call, either using the local or global HTTP client
+      return client({ url, data: requestData, header });
     },
-    ...globalOptions?.mutationOptions,
+    ...mutationOptions,
     ...options,
   });
 }
 
 // Hook to handle PUT API calls
 export function usePutAPI<TRequest, TResponse>({
-  endpoint,
+  url,
   options,
-  headers,
+  headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps & {
-  options?: UseMutationOptions<TResponse, unknown, TRequest>;
-} & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+}: UseMutateHooksProps<TRequest, TResponse>) {
+  const {
+    defaultHeaders,
+    put: globalPut,
+    useMutation: defaultUseMutation,
+    mutationOptions,
+  } = easyQueryHooksProps || {};
 
-  const client = localHttpClient || globalHttpClient;
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  // Determine which HTTP client to use
+  const client = localHttpClient || globalPut || put;
+
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useMutation = defaultUseMutation || useBackupMutation;
 
   return useMutation<TResponse, unknown, TRequest>({
-    mutationFn: async (data) => {
-      return client?.put
-        ? client.put(endpoint, data, combinedHeaders)
-        : put(endpoint, data, combinedHeaders);
+    mutationFn: async (requestData: TRequest) => {
+      // Perform the API call, either using the local or global HTTP client
+      return client({ url, data: requestData, header });
     },
-    ...globalOptions?.mutationOptions,
+    ...mutationOptions,
     ...options,
   });
 }
 
 // Hook to handle DELETE API calls
-export function useDeleteAPI<TRequest, TResponse>({
-  endpoint,
+export function useDeleteAPI<T>({
+  url,
   options,
-  headers,
+  headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps & {
-  options?: UseMutationOptions<TResponse, unknown, TRequest>;
-} & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+}: UseHooksProps<T>) {
+  const {
+    defaultHeaders,
+    delete: globalDelete,
+    useQuery: defaultUseQuery,
+    queryOptions,
+  } = easyQueryHooksProps || {};
 
-  const client = localHttpClient || globalHttpClient;
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  // Determine which HTTP client to use
+  const client = localHttpClient || globalDelete || remove;
 
-  return useMutation<TResponse, unknown, TRequest>({
-    mutationFn: async () => {
-      return client?.delete
-        ? client.delete(endpoint, combinedHeaders)
-        : remove(endpoint, combinedHeaders);
-    },
-    ...globalOptions?.mutationOptions,
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useQuery = defaultUseQuery || useBackupQuery;
+  return useQuery<T>([url], async () => client({ url, header }), {
+    ...queryOptions,
     ...options,
   });
 }
 
 // Hook to handle GET API calls with pagination (infinite scroll)
 export function useGetInfiniteAPI<T>({
-  endpoint,
+  url,
   options,
-  headers,
+  headers: localHeaders,
   hasParams,
   httpClient: localHttpClient,
-}: UseHooksProps & { options?: UseInfiniteQueryOptions<T> } & {
-  hasParams?: boolean;
-} & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+}: UseInfinityHooksProps<T>) {
+  const {
+    defaultHeaders,
+    get: globalGet,
+    useInfiniteQuery: defaultUseInfiiniteQuery,
+    infiniteQueryOptions,
+  } = easyQueryHooksProps || {};
 
-  const client = localHttpClient || globalHttpClient;
-  const combinedHeaders = { ...client?.defaultHeaders, ...headers };
+  // Determine which HTTP client to use
+  const client = localHttpClient || globalGet || get;
+
+  // Combine default and custom headers
+  const header = {
+    ...defaultHeaders,
+    ...localHeaders,
+  };
+
+  // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
+  const useInfiniteQuery = defaultUseInfiiniteQuery || useBackupInfiniteQuery;
 
   return useInfiniteQuery<T>(
-    [endpoint],
+    [url],
     async ({ pageParam = 1 }) => {
-      // Construct endpoint based on whether it already has query parameters
-      const formatEndpoint = `${endpoint}${
-        hasParams ? "&" : "?"
-      }page=${pageParam}`;
-      return client?.get
-        ? client.get(formatEndpoint, combinedHeaders)
-        : get(formatEndpoint, combinedHeaders);
+      // Construct url based on whether it already has query parameters
+      const formaturl = `${url}${hasParams ? "&" : "?"}page=${pageParam}`;
+      return client({ url: formaturl, header });
     },
-    { ...globalOptions?.infiniteQueryOptions, ...options }
+    { ...infiniteQueryOptions, ...options }
   );
 }
