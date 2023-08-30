@@ -60,7 +60,11 @@ function useGetAPI(_a) {
     var client = localHttpClient || setup_1.httpClient;
     // Combine default and custom headers
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
-    return (0, react_query_1.useQuery)([endpoint], function () { return (client ? client.get(endpoint, combinedHeaders) : (0, API_1.get)(endpoint)); }, __assign(__assign({}, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.queryOptions), options));
+    return (0, react_query_1.useQuery)([endpoint], function () {
+        return (client === null || client === void 0 ? void 0 : client.get)
+            ? client.get(endpoint, combinedHeaders)
+            : (0, API_1.get)(endpoint, combinedHeaders);
+    }, __assign(__assign({}, setup_1.globalOptions === null || setup_1.globalOptions === void 0 ? void 0 : setup_1.globalOptions.queryOptions), options));
 }
 exports.useGetAPI = useGetAPI;
 // Hook to handle POST API calls
@@ -72,7 +76,7 @@ function usePostAPI(_a) {
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 // Perform the API call, either using the local or global HTTP client
-                return [2 /*return*/, client
+                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.post)
                         ? client.post(endpoint, data, combinedHeaders)
                         : (0, API_1.post)(endpoint, data, combinedHeaders)];
             });
@@ -87,7 +91,7 @@ function usePatchAPI(_a) {
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, client
+                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.patch)
                         ? client.patch(endpoint, data, combinedHeaders)
                         : (0, API_1.patch)(endpoint, data, combinedHeaders)];
             });
@@ -102,7 +106,7 @@ function usePutAPI(_a) {
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function (data) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, client
+                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.put)
                         ? client.put(endpoint, data, combinedHeaders)
                         : (0, API_1.put)(endpoint, data, combinedHeaders)];
             });
@@ -117,7 +121,7 @@ function useDeleteAPI(_a) {
     var combinedHeaders = __assign(__assign({}, client === null || client === void 0 ? void 0 : client.defaultHeaders), headers);
     return (0, react_query_1.useMutation)(__assign(__assign({ mutationFn: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, client
+                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.delete)
                         ? client.delete(endpoint, combinedHeaders)
                         : (0, API_1.remove)(endpoint, combinedHeaders)];
             });
@@ -136,7 +140,7 @@ function useGetInfiniteAPI(_a) {
             var formatEndpoint;
             return __generator(this, function (_c) {
                 formatEndpoint = "".concat(endpoint).concat(hasParams ? "&" : "?", "page=").concat(pageParam);
-                return [2 /*return*/, client
+                return [2 /*return*/, (client === null || client === void 0 ? void 0 : client.get)
                         ? client.get(formatEndpoint, combinedHeaders)
                         : (0, API_1.get)(formatEndpoint, combinedHeaders)];
             });

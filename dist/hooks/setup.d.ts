@@ -13,16 +13,16 @@ export type UseHooksProps = {
 export type StandardApi = (url: string, header: Record<string, string>) => Promise<any>;
 export type WithDataApi = (url: string, data: any, header: Record<string, string>) => Promise<any>;
 export type HttpClientFunctions = {
-    get: StandardApi;
-    post: WithDataApi;
-    patch: WithDataApi;
-    put: WithDataApi;
-    delete: StandardApi;
     defaultHeaders?: Record<string, string>;
+    get?: StandardApi;
+    post?: WithDataApi;
+    patch?: WithDataApi;
+    put?: WithDataApi;
+    delete?: StandardApi;
 };
 export declare let httpClient: HttpClientFunctions | null;
 export declare const setupHTTPClient: ({ client, defaultHeaders, }: {
-    client: HttpClientFunctions;
+    client?: HttpClientFunctions | undefined;
     defaultHeaders?: Record<string, string> | undefined;
 }) => void;
 export type HttpClientOption = {
