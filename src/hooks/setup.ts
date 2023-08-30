@@ -37,12 +37,12 @@ export type WithDataApi = (
 
 // Type definition for the HTTP client functions
 export type HttpClientFunctions = {
-  get: StandardApi;
-  post: WithDataApi;
-  patch: WithDataApi;
-  put: WithDataApi;
-  delete: StandardApi;
-  defaultHeaders?: Record<string, string>; // Default headers that are used if none are provided in the call
+  defaultHeaders?: Record<string, string>;
+  get?: StandardApi;
+  post?: WithDataApi;
+  patch?: WithDataApi;
+  put?: WithDataApi;
+  delete?: StandardApi;
 };
 
 // Variable to hold the global HTTP client
@@ -53,7 +53,7 @@ export const setupHTTPClient = ({
   client,
   defaultHeaders,
 }: {
-  client: HttpClientFunctions;
+  client?: HttpClientFunctions;
   defaultHeaders?: Record<string, string>;
 }) => {
   httpClient = { ...client, defaultHeaders };

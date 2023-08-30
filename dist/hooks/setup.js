@@ -20,7 +20,8 @@ exports.setupGlobalOptions = setupGlobalOptions;
 // Variable to hold the global HTTP client
 exports.httpClient = null;
 // Function to set up the global HTTP client
-var setupHTTPClient = function (client, defaultHeaders) {
+var setupHTTPClient = function (_a) {
+    var client = _a.client, defaultHeaders = _a.defaultHeaders;
     exports.httpClient = __assign(__assign({}, client), { defaultHeaders: defaultHeaders });
 };
 exports.setupHTTPClient = setupHTTPClient;

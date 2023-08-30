@@ -31,7 +31,7 @@ export function useGetAPI<T>({
   return useQuery<T>(
     [endpoint],
     () =>
-      client
+      client?.get
         ? client.get(endpoint, combinedHeaders)
         : get(endpoint, combinedHeaders),
     { ...globalOptions?.queryOptions, ...options }
@@ -52,7 +52,7 @@ export function usePostAPI<TRequest, TResponse>({
   return useMutation<TResponse, unknown, TRequest>({
     mutationFn: async (data) => {
       // Perform the API call, either using the local or global HTTP client
-      return client
+      return client?.post
         ? client.post(endpoint, data, combinedHeaders)
         : post(endpoint, data, combinedHeaders);
     },
@@ -75,7 +75,7 @@ export function usePatchAPI<TRequest, TResponse>({
 
   return useMutation<TResponse, unknown, TRequest>({
     mutationFn: async (data) => {
-      return client
+      return client?.patch
         ? client.patch(endpoint, data, combinedHeaders)
         : patch(endpoint, data, combinedHeaders);
     },
@@ -98,7 +98,7 @@ export function usePutAPI<TRequest, TResponse>({
 
   return useMutation<TResponse, unknown, TRequest>({
     mutationFn: async (data) => {
-      return client
+      return client?.put
         ? client.put(endpoint, data, combinedHeaders)
         : put(endpoint, data, combinedHeaders);
     },
@@ -121,7 +121,7 @@ export function useDeleteAPI<TRequest, TResponse>({
 
   return useMutation<TResponse, unknown, TRequest>({
     mutationFn: async () => {
-      return client
+      return client?.delete
         ? client.delete(endpoint, combinedHeaders)
         : remove(endpoint, combinedHeaders);
     },
@@ -150,7 +150,7 @@ export function useGetInfiniteAPI<T>({
       const formatEndpoint = `${endpoint}${
         hasParams ? "&" : "?"
       }page=${pageParam}`;
-      return client
+      return client?.get
         ? client.get(formatEndpoint, combinedHeaders)
         : get(formatEndpoint, combinedHeaders);
     },

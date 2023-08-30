@@ -21,7 +21,10 @@ export type HttpClientFunctions = {
     defaultHeaders?: Record<string, string>;
 };
 export declare let httpClient: HttpClientFunctions | null;
-export declare const setupHTTPClient: (client: HttpClientFunctions, defaultHeaders?: Record<string, string>) => void;
+export declare const setupHTTPClient: ({ client, defaultHeaders, }: {
+    client: HttpClientFunctions;
+    defaultHeaders?: Record<string, string> | undefined;
+}) => void;
 export type HttpClientOption = {
     httpClient?: HttpClientFunctions;
 };
