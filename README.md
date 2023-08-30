@@ -29,47 +29,53 @@ yarn add easy-query-hooks
 
 Like with @tanstack You need to Wrap a provider around the app and pass QueryClient in
 
+
+* setUpEasyQueryHooks({ useMutation, useQuery, useInfiniteQuery })* is Required
+
 ```javascript
-import { QueryClient } from "@tanstack/react-query";
-import { WrapThatApp } from "easy-query-hooks";
-import TestComponent from "./TestComponent";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
+import { setUpEasyQueryHooks } from "easy-query-hooks";
 
 const queryClient = new QueryClient();
 
+setUpEasyQueryHooks({ useMutation, useQuery, useInfiniteQuery });
+
 function App() {
   return (
-    <WrapThatApp queryClient={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <div className="App">
         <h1>Testing easy-query-hooks</h1>
-        <TestComponent />
       </div>
-    </WrapThatApp>
+    </QueryClientProvider>
   );
 }
 
 export default App;
+
 ```
 
 
-Before using hooks, you may want to set up global options and an HTTP client.
+Before using hooks, you may want to set up default options and an HTTP client.
 
 ```javascript
-import { setupGlobalOptions, setupHTTPClient } from 'easy-query-hooks';
 
-const globalOptions = {
-  queryOptions: {},
-  mutationOptions: {}
-};
+const customGet = async ({ url, data, header }: HttpClientParams) =>
+  fetch(url, { body: data, headers: header });
 
-setupGlobalOptions(globalOptions);
+setUpEasyQueryHooks({
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  queryOptions: { refetchInterval: 1000 },
+  get: customGet,
+});
 
-const httpClient = {
-  get: yourGetFunction,
-  post: yourPostFunction,
-  // ...other methods
-};
-
-setupHTTPClient(httpClient);
 ```
 
 ### Hooks
