@@ -57,6 +57,7 @@ var WrapThatApp_1 = require("../WrapThatApp");
 function useGetAPI(_a) {
     var endpoint = _a.endpoint, options = _a.options, headers = _a.headers, localHttpClient = _a.httpClient;
     var _b = (0, WrapThatApp_1.useGlobalContext)(), globalHttpClient = _b.httpClient, globalOptions = _b.globalOptions;
+    console.log("Global context value:", { globalOptions: globalOptions, globalHttpClient: globalHttpClient });
     // Determine which HTTP client to use
     var client = localHttpClient || globalHttpClient;
     // Combine default and custom headers

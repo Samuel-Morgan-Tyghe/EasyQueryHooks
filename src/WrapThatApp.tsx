@@ -21,9 +21,11 @@ export const WrapThatApp: React.FC<WrapThatAppProps> = ({
   children,
   queryClient,
   QueryClientProvider,
-  globalOptions,
-  httpClient,
+  globalOptions = {},
+  httpClient = {},
 }) => {
+  console.log("Global context value:", { globalOptions, httpClient });
+  console.log(GlobalContext);
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalContext.Provider value={{ globalOptions, httpClient }}>
@@ -36,10 +38,13 @@ export const WrapThatApp: React.FC<WrapThatAppProps> = ({
 // Custom hook to use this context
 export const useGlobalContext = (): GlobalContextProps => {
   const context = useContext(GlobalContext);
-  if (!context) {
+  console.log("Received context:", context);
+
+  if (context === null) {
     throw new Error(
-      "useGlobalContext must be used within a WrapThatApp component"
+      "useGlobalContext must be used within a WrapThatApp component. Make sure WrapThatApp wraps your component hierarchy."
     );
   }
+
   return context;
 };

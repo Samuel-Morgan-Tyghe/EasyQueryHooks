@@ -19,7 +19,16 @@ export function useGetAPI<T>({
   headers,
   httpClient: localHttpClient,
 }: UseHooksProps & { options?: UseQueryOptions<T> } & HttpClientOption) {
-  const { httpClient: globalHttpClient, globalOptions } = useGlobalContext();
+  const globalContext = useGlobalContext();
+  console.log("🚀 ~ file: useEasyHook.ts:23 ~ globalContext:", globalContext);
+
+  const globalHttpClient = globalContext.httpClient;
+  const globalOptions = globalContext.globalOptions;
+
+  console.log("Global context value:", {
+    globalOptions,
+    globalHttpClient,
+  });
 
   // Determine which HTTP client to use
   const client = localHttpClient || globalHttpClient;
