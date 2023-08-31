@@ -6,10 +6,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "postinstall": "npm-insights:log",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@tanstack/react-query": "^4.33.0"
+    "@tanstack/react-query": "^4.33.0",
+    "npm-insights": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
