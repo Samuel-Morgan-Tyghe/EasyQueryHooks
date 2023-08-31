@@ -23,7 +23,7 @@ npm install easy-query-hooks
 yarn add easy-query-hooks
 ```
 
-If you havent already you will need to follow the setup for @tanstack
+If you havent already you will need to follow the setup for [@tanstack](https://tanstack.com/query/latest/docs/react/quick-start)
 
 ```bash
 npm install @tanstack/react-query
