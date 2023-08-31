@@ -25,11 +25,12 @@ yarn add easy-query-hooks
 
 If you havent already you will need to follow the setup for @tanstack
 
-``bash
+```bash
 npm install @tanstack/react-query
 # or
 yarn add @tanstack/react-query
 ```
+
 
 ## Usage
 
@@ -134,6 +135,13 @@ setUpEasyQueryHooks({
 
 ```javascript
 const { mutate } = usePostAPI<TRequest, TResponse>({
+  url: '/api/users',
+});
+```
+#### `usePatchAPI`
+
+```javascript
+const { mutate } = usePatchAPI<TRequest, TResponse>({
   url: '/api/users',
 });
 ```
