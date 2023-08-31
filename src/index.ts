@@ -1,12 +1,9 @@
 export {
+  useDeleteAPI,
   useGetAPI,
+  usePatchAPI,
   usePostAPI,
   usePutAPI,
-  usePatchAPI,
-  useDeleteAPI,
-} from "./hooks/useEasyHook";
+} from "./easy-query-hooks/useEasyHook";
 
-export { setUpEasyQueryHooks } from "./hooks/setup";
-
-// Exporting WrapThatApp component
-export { WrapThatApp } from "./WrapThatApp";
+export { setUpEasyQueryHooks } from "./easy-query-hooks/setup";

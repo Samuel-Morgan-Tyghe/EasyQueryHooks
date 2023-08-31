@@ -1,15 +1,4 @@
-type ApiOptions = {
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  url: string;
-  body?: unknown;
-  headers?: Record<string, string>;
-};
-
-export type HttpClientParams<T = any> = {
-  url: string;
-  data?: T;
-  header: Record<string, string>;
-};
+import { ApiOptions, HttpClientParams } from "./index.d";
 
 export default async function api({ method, url, body, headers }: ApiOptions) {
   const response = await fetch(url, {
@@ -47,3 +36,20 @@ export const patch = async ({ url, data, header }: HttpClientParams) => {
 export const remove = async ({ url, data, header }: HttpClientParams) => {
   return api({ method: "DELETE", url, body: data, headers: header });
 };
+
+export const APIOBJ = {
+  get,
+  post,
+  put,
+  patch,
+  remove,
+};
+
+export const getDefaultClient = (key: string) =>
+  ({
+    get,
+    post,
+    put,
+    patch,
+    remove,
+  }[key] ?? get);
