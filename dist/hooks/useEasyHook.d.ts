@@ -23,7 +23,7 @@ export declare function useGetAPI<T>({ url, options, headers: localHeaders, http
 export declare function usePostAPI<TRequest, TResponse>({ url, options, headers: localHeaders, httpClient: localHttpClient, }: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
 export declare function usePatchAPI<TRequest, TResponse>({ url, options, headers: localHeaders, httpClient: localHttpClient, }: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
 export declare function usePutAPI<TRequest, TResponse>({ url, options, headers: localHeaders, httpClient: localHttpClient, }: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
-export declare function useDeleteAPI<T>({ url, options, headers: localHeaders, httpClient: localHttpClient, }: UseHooksProps<T>): import("@tanstack/react-query").UseQueryResult<T, unknown>;
+export declare function useDeleteAPI<TRequest, TResponse>({ url, options, headers: localHeaders, httpClient: localHttpClient, }: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
 export declare function useGetInfiniteAPI<T>({ url, options, headers: localHeaders, hasParams, httpClient: localHttpClient, }: UseInfinityHooksProps<T>): import("@tanstack/react-query").UseInfiniteQueryResult<T, unknown>;
 export {};
 //# sourceMappingURL=useEasyHook.d.ts.map

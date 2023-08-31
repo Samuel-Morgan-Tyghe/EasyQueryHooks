@@ -130,16 +130,19 @@ exports.usePutAPI = usePutAPI;
 function useDeleteAPI(_a) {
     var _this = this;
     var url = _a.url, options = _a.options, localHeaders = _a.headers, localHttpClient = _a.httpClient;
-    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalDelete = _b.delete, defaultUseQuery = _b.useQuery, queryOptions = _b.queryOptions;
+    var _b = setup_1.easyQueryHooksProps || {}, defaultHeaders = _b.defaultHeaders, globalDelete = _b.delete, defaultUseMutation = _b.useMutation, mutationOptions = _b.mutationOptions;
     // Determine which HTTP client to use
     var client = localHttpClient || globalDelete || API_1.remove;
     // Combine default and custom headers
     var header = __assign(__assign({}, defaultHeaders), localHeaders);
     // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
-    var useQuery = defaultUseQuery || react_query_1.useQuery;
-    return useQuery([url], function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
-        return [2 /*return*/, client({ url: url, header: header })];
-    }); }); }, __assign(__assign({}, queryOptions), options));
+    var useMutation = defaultUseMutation || react_query_1.useMutation;
+    return useMutation(__assign(__assign({ mutationFn: function (requestData) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                // Perform the API call, either using the local or global HTTP client
+                return [2 /*return*/, client({ url: url, data: requestData, header: header })];
+            });
+        }); } }, mutationOptions), options));
 }
 exports.useDeleteAPI = useDeleteAPI;
 // Hook to handle GET API calls with pagination (infinite scroll)
