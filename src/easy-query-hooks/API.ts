@@ -37,14 +37,6 @@ export const remove = async ({ url, data, header }: HttpClientParams) => {
   return api({ method: "DELETE", url, body: data, headers: header });
 };
 
-export const APIOBJ = {
-  get,
-  post,
-  put,
-  patch,
-  remove,
-};
-
 export const getDefaultClient = (key: string) =>
   ({
     get,
