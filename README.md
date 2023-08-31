@@ -23,14 +23,45 @@ npm install easy-query-hooks
 yarn add easy-query-hooks
 ```
 
+If you havent already you will need to follow the setup for @tanstack
+
+``bash
+npm install @tanstack/react-query
+# or
+yarn add @tanstack/react-query
+```
+
 ## Usage
+
+```javascript
+import { useGetAPI } from "easy-query-hooks";
+
+const TestComponent = () => {
+  type post = { title: string };
+  const { data: posts, isLoading } = useGetAPI<post[]>({
+    url: "https://jsonplaceholder.typicode.com/posts",
+  });
+
+  return (
+    <>
+      {isLoading ? (
+        <div>loading</div>
+      ) : (
+        posts?.map((post) => <div>{post.title}</div>)
+      )}
+    </>
+  );
+};
+
+export default TestComponent;
+```
 
 ### Setup
 
 Like with @tanstack You need to Wrap a provider around the app and pass QueryClient in
 
 
-* setUpEasyQueryHooks({ useMutation, useQuery, useInfiniteQuery })* is Required
+**setUpEasyQueryHooks({ useMutation, useQuery, useInfiniteQuery } is Required**
 
 ```javascript
 import {
@@ -61,21 +92,32 @@ export default App;
 ```
 
 
-Before using hooks, you may want to set up default options and an HTTP client.
+Before using hooks, you may want to set up default options for (queryOptions,mutationOptions,infiniteQueryOptions), defaultHeaders and customise HTTP client, useful for adding axios. 
+
+
 
 ```javascript
-
 const customGet = async ({ url, data, header }: HttpClientParams) =>
-  fetch(url, { body: data, headers: header });
+  axios
+    .get(url, {
+      headers: header,
+    })
+    .then((res) => res.data);
 
 setUpEasyQueryHooks({
   useInfiniteQuery,
   useMutation,
   useQuery,
-  queryOptions: { refetchInterval: 1000 },
   get: customGet,
+  queryOptions: {
+    onError: (err: unknown) => {
+      if (err instanceof Error) {
+        setToast(err.message, "Error");
+      }
+    },
+  },
+  defaultHeaders: authHeaders,
 });
-
 ```
 
 ### Hooks
@@ -83,30 +125,34 @@ setUpEasyQueryHooks({
 #### `useGetAPI`
 
 ```javascript
-const { data, isLoading } = useGetAPI({
-  endpoint: '/api/users',
-  options: {},
-});
+  const { data: posts } = useGetAPI<post[]>({
+    url: "https://jsonplaceholder.typicode.com/posts",
+  });
 ```
 
 #### `usePostAPI`
 
 ```javascript
-const { mutate } = usePostAPI({
-  endpoint: '/api/users',
-  options: {}
+const { mutate } = usePostAPI<TRequest, TResponse>({
+  url: '/api/users',
+});
+```
+#### `usePutAPI`
+
+```javascript
+const { mutate } = usePutAPI({
+  url: '/api/users',
+});
+```
+#### `useDeleteAPI`
+
+```javascript
+const { mutate } = useDeleteAPI({
+  url: '/api/users',
 });
 ```
 
-... other hooks.
-
 ## API
-
-### useGetAPI
-* `endpoint` - API endpoint to call.
-* `options` - Optional custom React Query options.
-
-... other hooks and their APIs.
 
 ## Examples
 
@@ -114,7 +160,7 @@ const { mutate } = usePostAPI({
 
 ```javascript
 const { data, isLoading, error } = useGetAPI({
-  endpoint: '/api/users',
+  url: '/api/users',
 });
 
 if (isLoading) return "Loading...";
@@ -132,28 +178,35 @@ return (
 ### Using `usePostAPI` to Post Data
 
 ```javascript
-const [name, setName] = useState("");
+  const { mutate: submitPost } = usePostAPI({
+    url: "https://jsonplaceholder.typicode.com/posts",
+  });
 
-const { mutateAsync, isLoading, isError } = usePostAPI({
-  endpoint: '/api/create',
-  options: {}
-});
+  const handleSubmit = () => {
+    submitPost({
+      title: "foo",
+      body: "bar",
+      userId: 1,
+    });
+  };
+```
+### Using `useDeleteAPI` to Post Data
 
-const handleSubmit = async () => {
-  try {
-    const response = await mutateAsync({ name });
-    console.log('Data saved:', response);
-  } catch (error) {
-    console.log('Save failed:', error);
-  }
-};
+```javascript
+  const { mutateAsync: deletePost } = useDeleteAPI({
+    url: "https://jsonplaceholder.typicode.com/posts/${id}",
+  });
+
+  const handleDelete = async() => {
+    await deletePost();
+  };
 ```
 
 ### Using `useGetInfiniteAPI` to fetch articles
 
 ```javascript
 const { data, fetchNextPage, hasNextPage } = useGetInfiniteAPI({
-  endpoint: '/api/articles?sort=desc',
+  url: '/api/articles?sort=desc',
   hasParams: true,
   options: {
     getNextPageParam: (lastPage, pages) => {
@@ -167,43 +220,6 @@ const fetchMoreArticles = () => {
     fetchNextPage();
   }
 };
-```
-
-### Using `setupGlobalOptions` to define Global Options
-
-```javascript
-import { useToast } from "@chakra-ui/react";
-import { setupGlobalOptions } from 'easy-query-hooks';
-
-const toast = useToast();
-
-const globalMutationOptions = {
-  onSuccess: () => {
-    toast({
-      title: "Success",
-      description: "Your operation was successful",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-  },
-  onError: (error) => {
-    toast({
-      title: "Error",
-      description: `Operation failed: ${error.message}`,
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    });
-  },
-};
-
-const globalOptions = {
-  mutationOptions: globalMutationOptions,
-  // other options...
-};
-
-setupGlobalOptions(globalOptions);
 ```
 
 ## Contribution

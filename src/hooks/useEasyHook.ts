@@ -168,17 +168,17 @@ export function usePutAPI<TRequest, TResponse>({
 }
 
 // Hook to handle DELETE API calls
-export function useDeleteAPI<T>({
+export function useDeleteAPI<TRequest, TResponse>({
   url,
   options,
   headers: localHeaders,
   httpClient: localHttpClient,
-}: UseHooksProps<T>) {
+}: UseMutateHooksProps<TRequest, TResponse>) {
   const {
     defaultHeaders,
     delete: globalDelete,
-    useQuery: defaultUseQuery,
-    queryOptions,
+    useMutation: defaultUseMutation,
+    mutationOptions,
   } = easyQueryHooksProps || {};
 
   // Determine which HTTP client to use
@@ -191,9 +191,13 @@ export function useDeleteAPI<T>({
   };
 
   // defaultUseQuery could be null so we need to pass a backup query , the backupquery wont work
-  const useQuery = defaultUseQuery || useBackupQuery;
-  return useQuery<T>([url], async () => client({ url, header }), {
-    ...queryOptions,
+  const useMutation = defaultUseMutation || useBackupMutation;
+  return useMutation<TResponse, unknown, TRequest>({
+    mutationFn: async (requestData: TRequest) => {
+      // Perform the API call, either using the local or global HTTP client
+      return client({ url, data: requestData, header });
+    },
+    ...mutationOptions,
     ...options,
   });
 }
