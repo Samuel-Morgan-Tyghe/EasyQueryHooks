@@ -1,4 +1,3 @@
-export { useGetAPI, usePostAPI, usePutAPI, usePatchAPI, useDeleteAPI, } from "./hooks/useEasyHook";
-export { setUpEasyQueryHooks } from "./hooks/setup";
-export { WrapThatApp } from "./WrapThatApp";
+export { useDeleteAPI, useGetAPI, usePatchAPI, usePostAPI, usePutAPI, } from "./easy-query-hooks/useEasyHook";
+export { setUpEasyQueryHooks } from "./easy-query-hooks/setup";
 //# sourceMappingURL=index.d.ts.map
