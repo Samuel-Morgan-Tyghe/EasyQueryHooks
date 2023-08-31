@@ -239,3 +239,33 @@ Feel free to open issues or PRs! Check the [Contribution Guide](https://github.c
 MIT
 
 GitHub Repository: [Samuel-Morgan-Tyghe/EasyQueryHooks](https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks)
+
+Certainly! A roadmap helps both developers and users understand the future direction of a project. Here's a sample section you can include in your README:
+
+---
+
+## Roadmap
+
+This project is under active development, and we're always open to suggestions and contributions. Below is the list of features we're planning to implement in the near future:
+
+### Planned Features
+
+#### 1. Advanced Testing Support
+
+- **Status**: Not Started
+- **Details**: Integrate `@testing-library/react-hooks` to ensure that hooks are functioning as expected.
+
+#### 2. Optional Key Override
+
+- **Status**: Not Started
+- **Details**: Provide an optional mechanism for overriding the query key, allowing for more granular control over queries.
+
+#### 3. Pass ID as Endpoint Parameter
+
+- **Status**: Not Started
+- **Details**: Allow passing IDs directly into the endpoint URL as a parameter (e.g., `/posts/{id}/`) to simplify state management and improve API design consistency.
+
+#### 4. Prefix for API Calls
+
+- **Status**: Not Started
+- **Details**: Introduce a prefix system for API calls. This would allow users to specify a base URL (e.g., `'https://example-api-dev.azurewebsites.net/api/v1/'`) so that hooks can utilize relative paths (e.g., `/posts`) for cleaner and more efficient API calls.
