@@ -118,6 +118,7 @@ setUpEasyQueryHooks({
     },
   },
   defaultHeaders: authHeaders,
+  prefixUrl: "https://jsonplaceholder.typicode.com/", 
 });
 ```
 
@@ -265,7 +266,3 @@ This project is under active development, and we're always open to suggestions a
 - **Status**: Not Started
 - **Details**: Allow passing IDs directly into the endpoint URL as a parameter (e.g., `/posts/{id}/`) to simplify state management and improve API design consistency.
 
-#### 4. Prefix for API Calls
-
-- **Status**: Not Started
-- **Details**: Introduce a prefix system for API calls. This would allow users to specify a base URL (e.g., `'https://example-api-dev.azurewebsites.net/api/v1/'`) so that hooks can utilize relative paths (e.g., `/posts`) for cleaner and more efficient API calls.
