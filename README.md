@@ -241,9 +241,6 @@ MIT
 
 GitHub Repository: [Samuel-Morgan-Tyghe/EasyQueryHooks](https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks)
 
-Certainly! A roadmap helps both developers and users understand the future direction of a project. Here's a sample section you can include in your README:
-
----
 
 ## Roadmap
 
