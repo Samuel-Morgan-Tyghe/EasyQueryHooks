@@ -1,6 +1,6 @@
 {
   "name": "easy-query-hooks",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Utility hooks for React Query",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,6 +9,23 @@
     "postinstall": "npm-insights:log",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks.git"
+  },
+  "keywords": [
+    "React",
+    "React Query",
+    "API",
+    "Hooks",
+    "HTTP"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks/issues"
+  },
+  "homepage": "https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks#readme",
   "dependencies": {
     "@tanstack/react-query": "^4.33.0",
     "npm-insights": "^2.0.1"
