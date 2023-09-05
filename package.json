@@ -1,12 +1,13 @@
 {
   "name": "easy-query-hooks",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "Utility hooks for React Query",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "bump": "yarn version --patch"
   },
   "repository": {
     "type": "git",
