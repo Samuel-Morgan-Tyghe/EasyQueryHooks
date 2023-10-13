@@ -4,6 +4,6 @@ export {
   usePatchAPI,
   usePostAPI,
   usePutAPI,
-} from "./easy-query-hooks/useEasyHook";
+} from "./useEasyHook";
 
-export { setUpEasyQueryHooks } from "./easy-query-hooks/setup";
+export { setUpEasyQueryHooks } from "./setup";

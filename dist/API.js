@@ -47,7 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = exports.patch = exports.put = exports.post = exports.get = void 0;
+exports.getDefaultClient = exports.remove = exports.patch = exports.put = exports.post = exports.get = void 0;
 function api(_a) {
     var method = _a.method, url = _a.url, body = _a.body, headers = _a.headers;
     return __awaiter(this, void 0, void 0, function () {
@@ -119,4 +119,15 @@ var remove = function (_a) {
     });
 };
 exports.remove = remove;
+var getDefaultClient = function (key) {
+    var _a;
+    return ((_a = {
+        get: exports.get,
+        post: exports.post,
+        put: exports.put,
+        patch: exports.patch,
+        remove: exports.remove,
+    }[key]) !== null && _a !== void 0 ? _a : exports.get);
+};
+exports.getDefaultClient = getDefaultClient;
 //# sourceMappingURL=API.js.map
