@@ -2,6 +2,28 @@
 
 Utility hooks for React Query, providing an easy and consistent way to make API calls. Simplifies your React application by abstracting common HTTP methods.
 
+
+<!-- NPM Downloads -->
+<a href="https://www.npmjs.com/package/easy-query-hooks" target="\_parent">
+  <img alt="" src="https://img.shields.io/npm/dm/easy-query-hooks.svg" />
+</a>
+<!-- BundlePhobia -->
+<a href="https://bundlephobia.com/package/easy-query-hooks@latest" target="\_parent">
+  <img alt="" src="https://badgen.net/bundlephobia/minzip/easy-query-hooks" />
+</a>
+<!-- Semantic Release -->
+<a href="#badge">
+  <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
+</a>
+<!-- GitHub Discussions & Support -->
+<a href="https://github.com/Samuel-Morgan-Tyghe/EasyQueryHooks/discussions">
+  <img alt="Join the discussion on Github" src="https://img.shields.io/badge/Github%20Discussions%20%26%20Support-Chat%20now!-blue" />
+</a>
+
+[![npm version](https://badge.fury.io/js/easy-query-hooks.svg)](https://badge.fury.io/js/easy-query-hooks)
+![NPM](https://img.shields.io/npm/l/easy-query-hooks)
+
+
 ## Table of Contents
 
 1. [Installation](#installation)
