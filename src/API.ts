@@ -1,4 +1,4 @@
-import { ApiOptions, HttpClientParams } from "./index.d";
+import { ApiOptions, HttpClientParams } from "./types";
 
 export default async function api({ method, url, body, headers }: ApiOptions) {
   const response = await fetch(url, {

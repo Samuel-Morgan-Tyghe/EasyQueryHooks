@@ -1,4 +1,4 @@
-import { EasyQueryHooksPropTypes } from ".";
+import { EasyQueryHooksPropTypes } from "./types";
 
 // variable to hold All the props passed to the setup function
 export let easyQueryHooksProps: EasyQueryHooksPropTypes | null = null;

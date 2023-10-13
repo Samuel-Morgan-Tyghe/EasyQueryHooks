@@ -6,12 +6,12 @@ import {
 } from "@tanstack/react-query";
 // Importing API call methods
 import { get, getDefaultClient } from "./API";
+import { easyQueryHooksProps } from "./setup";
 import {
   UseHooksProps,
   UseInfinityHooksProps,
   UseMutateHooksProps,
-} from "./index";
-import { easyQueryHooksProps } from "./setup";
+} from "./types";
 
 // Hook to handle GET API calls
 export function useGetAPI<T>({
