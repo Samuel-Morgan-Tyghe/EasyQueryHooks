@@ -1,6 +1,6 @@
 {
   "name": "easy-query-hooks",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Utility hooks for React Query",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
