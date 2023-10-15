@@ -1,21 +1,37 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 18",
+
   "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2022",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // "outDir": "lib",
+    "declaration": true,
+
+    
+    
     "jsx": "react",
-    "target": "es5",                     // Specify ECMAScript target version
-    "module": "commonjs",                // Specify module code generation
-    "outDir": "./dist",                  // Output directory for compiled files
+    // // "target": "es5",                     // Specify ECMAScript target version
+    // // "module": "commonjs",                // Specify module code generation
     "rootDir": "./src",                  // Root directory for source files
-    "declaration": true,                 // Generate corresponding .d.ts files
-    "declarationMap": true,              // Generate source maps for .d.ts files
-    "sourceMap": true,                   // Generate source maps for .js files
-    "strict": true,                      // Enable strict type checking
+    // "declaration": true,                 // Generate corresponding .d.ts files
+    // // "declarationMap": true,              // Generate source maps for .d.ts files
+    // "sourceMap": true,                   // Generate source maps for .js files
+    // "strict": true,                      // Enable strict type checking
     "esModuleInterop": true,             // Enables CommonJS/AMD/UMD module interoperability
-    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references
-    "lib": ["es2015", "dom"]
+    // "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references
+    "lib": ["es2022", "dom"],
+
+    "outDir": "lib"
+    
   },
-  "include": [
-    "src/**/*.ts", // Include TypeScript files in src directory
-    "src/**/*.tsx" ],
+  "include": ["src/**/*","src/**/*.d.ts"],
   "exclude": [
     "node_modules" // Exclude node_modules
   ]

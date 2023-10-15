@@ -6,4 +6,3 @@ export declare const put: ({ url, data, header }: HttpClientParams) => Promise<a
 export declare const patch: ({ url, data, header }: HttpClientParams) => Promise<any>;
 export declare const remove: ({ url, data, header }: HttpClientParams) => Promise<any>;
 export declare const getDefaultClient: (key: string) => ({ url, header }: HttpClientParams) => Promise<any>;
-//# sourceMappingURL=API.d.ts.map

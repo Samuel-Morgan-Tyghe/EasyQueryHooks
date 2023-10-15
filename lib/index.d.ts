@@ -14,4 +14,3 @@ export declare function usePostAPI<TRequest, TResponse>(props: UseMutateHooksPro
 export declare function usePatchAPI<TRequest, TResponse>(props: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
 export declare function usePutAPI<TRequest, TResponse>(props: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
 export declare function useDeleteAPI<TRequest, TResponse>(props: UseMutateHooksProps<TRequest, TResponse>): import("@tanstack/react-query").UseMutationResult<TResponse, unknown, TRequest, unknown>;
-//# sourceMappingURL=index.d.ts.map
